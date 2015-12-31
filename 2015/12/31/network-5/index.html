@@ -4,17 +4,45 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>simp1e&#39;s site</title>
+  <title>UDP多线程服务器程序编写 | simp1e&#39;s site</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="CTF爱好者、二进制分析师、未来的全栈工程师">
-<meta property="og:type" content="website">
-<meta property="og:title" content="simp1e's site">
-<meta property="og:url" content="http://simp1e.cc/index.html">
+  <meta name="description" content="#UDP回射服务器设计
+
+前言:UDP协议虽然是不可靠的协议，但是UDP协议并不需要建立连接，所以它的承载效率其实相较于TCP协议更加高。这次作业的目的就是利用UDP协议实现客户端和服务器之间的交互。
+
+##关键点
+
+UDP服务端需要实现多客户端并行，多线程技术
+UDP服务端要提取出每个客户端的IP地址和端口
+
+Talk Is Cheap show me the code##server-code">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UDP多线程服务器程序编写">
+<meta property="og:url" content="http://simp1e.cc/2015/12/31/network-5/index.html">
 <meta property="og:site_name" content="simp1e's site">
-<meta property="og:description" content="CTF爱好者、二进制分析师、未来的全栈工程师">
+<meta property="og:description" content="#UDP回射服务器设计
+
+前言:UDP协议虽然是不可靠的协议，但是UDP协议并不需要建立连接，所以它的承载效率其实相较于TCP协议更加高。这次作业的目的就是利用UDP协议实现客户端和服务器之间的交互。
+
+##关键点
+
+UDP服务端需要实现多客户端并行，多线程技术
+UDP服务端要提取出每个客户端的IP地址和端口
+
+Talk Is Cheap show me the code##server-code">
+<meta property="og:updated_time" content="2015-12-31T13:09:34.389Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="simp1e's site">
-<meta name="twitter:description" content="CTF爱好者、二进制分析师、未来的全栈工程师">
+<meta name="twitter:title" content="UDP多线程服务器程序编写">
+<meta name="twitter:description" content="#UDP回射服务器设计
+
+前言:UDP协议虽然是不可靠的协议，但是UDP协议并不需要建立连接，所以它的承载效率其实相较于TCP协议更加高。这次作业的目的就是利用UDP协议实现客户端和服务器之间的交互。
+
+##关键点
+
+UDP服务端需要实现多客户端并行，多线程技术
+UDP服务端要提取出每个客户端的IP地址和端口
+
+Talk Is Cheap show me the code##server-code">
   
     <link rel="alternative" href="/atom.xml" title="simp1e&#39;s site" type="application/atom+xml">
   
@@ -175,9 +203,7 @@
 	</div>
 </nav>
 
-      <div class="body-wrap">
-  
-    <article id="post-network-5" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-network-5" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2015/12/31/network-5/" class="article-date">
@@ -193,12 +219,19 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2015/12/31/network-5/">UDP多线程服务器程序编写</a>
+    <h1 class="article-title" itemprop="name">
+      UDP多线程服务器程序编写
     </h1>
   
 
       </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
       
     
     <div class="article-entry" itemprop="articleBody">
@@ -221,29 +254,58 @@
       
     </div>
     
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
   </div>
+  
+    
   
 </article>
 
 
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
 
 
 
 
 
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="network-5" data-title="UDP多线程服务器程序编写" data-url="http://simp1e.cc/2015/12/31/network-5/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
 
-  
-  
+
+
+
 </div>
       <footer id="footer">
   <div class="outer">
@@ -267,8 +329,8 @@
 		fancybox: true,
 		mathjax: true,
 		animate: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
