@@ -6,15 +6,55 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>simp1e&#39;s site</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="CTF爱好者、二进制分析师、未来的全栈工程师">
-<meta property="og:type" content="website">
+  <meta name="description" content="&amp;lt;!DOCTYPE html&amp;gt;body {
+  width: 45em;
+  border: 1px solid #ddd;
+  outline: 1300px solid #fff;
+  margin: 16px auto;
+}
+
+body .markdown-body
+{
+  padding: 30px;
+}
+
+@font-face {
+  font-family: fontawesome-m">
+<meta property="og:type" content="article">
 <meta property="og:title" content="simp1e's site">
-<meta property="og:url" content="http://simp1e.cc/index.html">
+<meta property="og:url" content="http://simp1e.cc/2016/01/02/network-5/index.html">
 <meta property="og:site_name" content="simp1e's site">
-<meta property="og:description" content="CTF爱好者、二进制分析师、未来的全栈工程师">
+<meta property="og:description" content="&amp;lt;!DOCTYPE html&amp;gt;body {
+  width: 45em;
+  border: 1px solid #ddd;
+  outline: 1300px solid #fff;
+  margin: 16px auto;
+}
+
+body .markdown-body
+{
+  padding: 30px;
+}
+
+@font-face {
+  font-family: fontawesome-m">
+<meta property="og:updated_time" content="2016-01-02T00:01:21.952Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="simp1e's site">
-<meta name="twitter:description" content="CTF爱好者、二进制分析师、未来的全栈工程师">
+<meta name="twitter:description" content="&amp;lt;!DOCTYPE html&amp;gt;body {
+  width: 45em;
+  border: 1px solid #ddd;
+  outline: 1300px solid #fff;
+  margin: 16px auto;
+}
+
+body .markdown-body
+{
+  padding: 30px;
+}
+
+@font-face {
+  font-family: fontawesome-m">
   
     <link rel="alternative" href="/atom.xml" title="simp1e&#39;s site" type="application/atom+xml">
   
@@ -175,128 +215,7 @@
 	</div>
 </nav>
 
-      <div class="body-wrap">
-  
-    <article id="post-network-5" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/01/05/network-5/" class="article-date">
-  	<time datetime="2016-01-05T10:17:23.521Z" itemprop="datePublished">2016-01-05</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/05/network-5/">UDP多线程服务器程序编写</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="UDP_u56DE_u5C04_u670D_u52A1_u5668_u8BBE_u8BA1"><a href="#UDP_u56DE_u5C04_u670D_u52A1_u5668_u8BBE_u8BA1" class="headerlink" title="UDP回射服务器设计"></a>UDP回射服务器设计</h1><blockquote>
-<p>前言:<br>UDP协议虽然是不可靠的协议，但是UDP协议并不需要建立连接，所以它的承载效率其实相较于TCP协议更加高。这次作业的目的就是利用UDP协议实现客户端和服务器之间的交互。</p>
-<h2 id="u5173_u952E_u70B9"><a href="#u5173_u952E_u70B9" class="headerlink" title="关键点"></a>关键点</h2><ol>
-<li>UDP服务端需要实现多客户端并行，多线程技术</li>
-<li>UDP服务端要提取出每个客户端的IP地址和端口</li>
-</ol>
-</blockquote>
-<h2 id="Talk_Is_Cheap_show_you_the_code"><a href="#Talk_Is_Cheap_show_you_the_code" class="headerlink" title="Talk Is Cheap show you the code"></a><strong>Talk Is Cheap show you the code</strong></h2><h2 id="server-code"><a href="#server-code" class="headerlink" title="server-code"></a>server-code</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//多线程参数定义</span></span><br><span class="line"><span class="keyword">struct</span> ThreadParameter &#123;</span><br><span class="line">    sockaddr_in addr_sock;</span><br><span class="line">    <span class="keyword">char</span> buf_data[<span class="number">255</span>];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">DWORD  WINAPI  <span class="title">AnswerThread</span><span class="params">(LPVOID  lparam)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    SOCKET serSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);</span><br><span class="line">    ThreadParameter *tp = (ThreadParameter*)lparam;</span><br><span class="line">    sockaddr_in addr_sock = tp-&gt;addr_sock;</span><br><span class="line">    <span class="keyword">char</span> * buf = tp-&gt;buf_data;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"接受到一个连接：%s %d\r\n"</span>, inet_ntoa(addr_sock.sin_addr), addr_sock.sin_port);</span><br><span class="line">    <span class="built_in">printf</span>(buf);</span><br><span class="line">    <span class="keyword">char</span> * sendData = <span class="string">"一个来自服务端的UDP数据包\n"</span>;</span><br><span class="line">    sendto(serSocket, sendData, <span class="built_in">strlen</span>(sendData), <span class="number">0</span>, (sockaddr *)&amp;addr_sock, <span class="keyword">sizeof</span>(addr_sock));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">char</span> recvData[<span class="number">255</span>];</span><br><span class="line">        <span class="built_in">memset</span>(recvData, <span class="number">0</span>, <span class="keyword">sizeof</span>(recvData));</span><br><span class="line">        <span class="keyword">int</span> ret = recvfrom(serSocket, recvData, <span class="number">255</span>, <span class="number">0</span>, (sockaddr *)&amp;remoteAddr, &amp;nAddrLen);</span><br><span class="line">        <span class="keyword">if</span> (ret &gt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            recvData[ret] = <span class="number">0x00</span>;</span><br><span class="line">            ThreadParameter new_client;</span><br><span class="line">            new_client.addr_sock = remoteAddr;</span><br><span class="line">            memcpy_s(new_client.buf_data, <span class="number">255</span>, recvData, ret + <span class="number">1</span>);</span><br><span class="line">            <span class="comment">//多线程处理</span></span><br><span class="line">            HANDLE  hThread;</span><br><span class="line">            DWORD  dwThreadId;</span><br><span class="line">            hThread = CreateThread(<span class="literal">NULL</span>, <span class="literal">NULL</span>, (LPTHREAD_START_ROUTINE)AnswerThread,</span><br><span class="line">                &amp;new_client, <span class="number">0</span>, &amp;dwThreadId);</span><br><span class="line">            <span class="keyword">if</span> (hThread == <span class="literal">NULL</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"CreatThread  AnswerThread()  failed.\n"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"子线程创建成功.\n"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    closesocket(serSocket);</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/01/05/network-5/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-cpu" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/01/03/cpu/" class="article-date">
-  	<time datetime="2016-01-03T02:05:31.190Z" itemprop="datePublished">2016-01-03</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/03/cpu/">兼容ARM9微处理器的Verilog RTL设计</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="ARM_u5904_u7406_u5668_u7684_u6D41_u6C34_u7EBF_u662F_u4EC0_u4E48_u6837_u5B50_u7684_uFF1F"><a href="#ARM_u5904_u7406_u5668_u7684_u6D41_u6C34_u7EBF_u662F_u4EC0_u4E48_u6837_u5B50_u7684_uFF1F" class="headerlink" title="ARM处理器的流水线是什么样子的？"></a>ARM处理器的流水线是什么样子的？</h1><blockquote>
-<p>ARM指令集的全部指令需要两个步骤，第一步是由Rm和Rs进行移位或者乘法操作，第二步是由第二操作数和Rn进行加法为主的运算操作。<br>同时，我们知道移位的运算是可以通过乘法来实现的（具体如何实现看书就行），更好的是，由于arm指令集的特点，对于arm指令的译码可以很简单的实现。于是我们可以把乘法这一步放到译码这一个阶段来执行，</p>
-</blockquote>
-<h1 id="ARM_u5904_u7406_u5668_u4E09_u7EA7_u6D41_u6C34_u7684_u5177_u4F53_u63CF_u8FF0"><a href="#ARM_u5904_u7406_u5668_u4E09_u7EA7_u6D41_u6C34_u7684_u5177_u4F53_u63CF_u8FF0" class="headerlink" title="ARM处理器三级流水的具体描述"></a>ARM处理器三级流水的具体描述</h1><p>1.第一级是取指通过端口rom_en和rom_addr实现的，rom_en是标志型号，代表现在是否能够取指，rom_addr是指针。</p>
-
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-network-5" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-network-5" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2016/01/02/network-5/" class="article-date">
@@ -1351,29 +1270,72 @@ UDP协议虽然是不可靠的协议，但是UDP协议并不需要建立连接�
       
     </div>
     
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/03/cpu/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          兼容ARM9微处理器的Verilog RTL设计
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
   
 </article>
 
 
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
 
 
 
 
 
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="network-5" data-title="" data-url="http://simp1e.cc/2016/01/02/network-5/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
 
-  
-  
+
+
+
 </div>
       <footer id="footer">
   <div class="outer">
@@ -1397,8 +1359,8 @@ UDP协议虽然是不可靠的协议，但是UDP协议并不需要建立连接�
 		fancybox: true,
 		mathjax: true,
 		animate: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
