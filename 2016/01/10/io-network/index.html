@@ -4,17 +4,29 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>simp1e&#39;s site</title>
+  <title>io-复用网络编程 | simp1e&#39;s site</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="CTF爱好者、二进制分析师、未来的全栈工程师">
-<meta property="og:type" content="website">
-<meta property="og:title" content="simp1e's site">
-<meta property="og:url" content="http://simp1e.cc/index.html">
+  <meta name="description" content="利用I/O复用模型实现一个时间同步服务器
+前言：I/O复用模型也称为选择模型或者select模型,它可以在单线程下是实现类似多线程模式的对于多个套接字的管理。使用select函数对多个套接字进行管理。
+
+1234567int select(__in int nfds,__in_out fd_set *readfds,__in_out fd_set *writefds,__in_out fd_set">
+<meta property="og:type" content="article">
+<meta property="og:title" content="io-复用网络编程">
+<meta property="og:url" content="http://simp1e.cc/2016/01/10/io-network/index.html">
 <meta property="og:site_name" content="simp1e's site">
-<meta property="og:description" content="CTF爱好者、二进制分析师、未来的全栈工程师">
+<meta property="og:description" content="利用I/O复用模型实现一个时间同步服务器
+前言：I/O复用模型也称为选择模型或者select模型,它可以在单线程下是实现类似多线程模式的对于多个套接字的管理。使用select函数对多个套接字进行管理。
+
+1234567int select(__in int nfds,__in_out fd_set *readfds,__in_out fd_set *writefds,__in_out fd_set">
+<meta property="og:image" content="http://simp1e.cc/tcp.png">
+<meta property="og:image" content="http://simp1e.cc/udp.png">
+<meta property="og:updated_time" content="2016-01-10T02:20:37.326Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="simp1e's site">
-<meta name="twitter:description" content="CTF爱好者、二进制分析师、未来的全栈工程师">
+<meta name="twitter:title" content="io-复用网络编程">
+<meta name="twitter:description" content="利用I/O复用模型实现一个时间同步服务器
+前言：I/O复用模型也称为选择模型或者select模型,它可以在单线程下是实现类似多线程模式的对于多个套接字的管理。使用select函数对多个套接字进行管理。
+
+1234567int select(__in int nfds,__in_out fd_set *readfds,__in_out fd_set *writefds,__in_out fd_set">
   
     <link rel="alternative" href="/atom.xml" title="simp1e&#39;s site" type="application/atom+xml">
   
@@ -175,9 +187,7 @@
 	</div>
 </nav>
 
-      <div class="body-wrap">
-  
-    <article id="post-io-network" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-io-network" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
       <a href="/2016/01/10/io-network/" class="article-date">
@@ -193,12 +203,19 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/10/io-network/">io-复用网络编程</a>
+    <h1 class="article-title" itemprop="name">
+      io-复用网络编程
     </h1>
   
 
       </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
       
     
     <div class="article-entry" itemprop="articleBody">
@@ -214,210 +231,68 @@
       
     </div>
     
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
   </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/01/07/network-5/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">UDP多线程服务器程序编写</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
   
 </article>
 
 
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
 
 
 
 
 
 
-
-  
-    <article id="post-network-5" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/01/07/network-5/" class="article-date">
-  	<time datetime="2016-01-07T14:25:56.077Z" itemprop="datePublished">2016-01-07</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/07/network-5/">UDP多线程服务器程序编写</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="UDP_u56DE_u5C04_u670D_u52A1_u5668_u8BBE_u8BA1"><a href="#UDP_u56DE_u5C04_u670D_u52A1_u5668_u8BBE_u8BA1" class="headerlink" title="UDP回射服务器设计"></a>UDP回射服务器设计</h1><blockquote>
-<p>前言:<br>UDP协议虽然是不可靠的协议，但是UDP协议并不需要建立连接，所以它的承载效率其实相较于TCP协议更加高。这次作业的目的就是利用UDP协议实现客户端和服务器之间的交互。</p>
-<h2 id="u5173_u952E_u70B9"><a href="#u5173_u952E_u70B9" class="headerlink" title="关键点"></a>关键点</h2><ol>
-<li>UDP服务端需要实现多客户端并行，多线程技术</li>
-<li>UDP服务端要提取出每个客户端的IP地址和端口</li>
-</ol>
-</blockquote>
-<h2 id="Talk_Is_Cheap_show_you_the_code"><a href="#Talk_Is_Cheap_show_you_the_code" class="headerlink" title="Talk Is Cheap show you the code"></a><strong>Talk Is Cheap show you the code</strong></h2><h2 id="server-code"><a href="#server-code" class="headerlink" title="server-code"></a>server-code</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//多线程参数定义</span></span><br><span class="line"><span class="keyword">struct</span> ThreadParameter &#123;</span><br><span class="line">    sockaddr_in addr_sock;</span><br><span class="line">    <span class="keyword">char</span> buf_data[<span class="number">255</span>];</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function">DWORD  WINAPI  <span class="title">AnswerThread</span><span class="params">(LPVOID  lparam)</span></span><br><span class="line"></span>&#123;</span><br><span class="line">    SOCKET serSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);</span><br><span class="line">    ThreadParameter *tp = (ThreadParameter*)lparam;</span><br><span class="line">    sockaddr_in addr_sock = tp-&gt;addr_sock;</span><br><span class="line">    <span class="keyword">char</span> * buf = tp-&gt;buf_data;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"接受到一个连接：%s %d\r\n"</span>, inet_ntoa(addr_sock.sin_addr), addr_sock.sin_port);</span><br><span class="line">    <span class="built_in">printf</span>(buf);</span><br><span class="line">    <span class="keyword">char</span> * sendData = <span class="string">"一个来自服务端的UDP数据包\n"</span>;</span><br><span class="line">    sendto(serSocket, sendData, <span class="built_in">strlen</span>(sendData), <span class="number">0</span>, (sockaddr *)&amp;addr_sock, <span class="keyword">sizeof</span>(addr_sock));</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">char</span> recvData[<span class="number">255</span>];</span><br><span class="line">        <span class="built_in">memset</span>(recvData, <span class="number">0</span>, <span class="keyword">sizeof</span>(recvData));</span><br><span class="line">        <span class="keyword">int</span> ret = recvfrom(serSocket, recvData, <span class="number">255</span>, <span class="number">0</span>, (sockaddr *)&amp;remoteAddr, &amp;nAddrLen);</span><br><span class="line">        <span class="keyword">if</span> (ret &gt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            recvData[ret] = <span class="number">0x00</span>;</span><br><span class="line">            ThreadParameter new_client;</span><br><span class="line">            new_client.addr_sock = remoteAddr;</span><br><span class="line">            memcpy_s(new_client.buf_data, <span class="number">255</span>, recvData, ret + <span class="number">1</span>);</span><br><span class="line">            <span class="comment">//多线程处理</span></span><br><span class="line">            HANDLE  hThread;</span><br><span class="line">            DWORD  dwThreadId;</span><br><span class="line">            hThread = CreateThread(<span class="literal">NULL</span>, <span class="literal">NULL</span>, (LPTHREAD_START_ROUTINE)AnswerThread,</span><br><span class="line">                &amp;new_client, <span class="number">0</span>, &amp;dwThreadId);</span><br><span class="line">            <span class="keyword">if</span> (hThread == <span class="literal">NULL</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"CreatThread  AnswerThread()  failed.\n"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">else</span></span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"子线程创建成功.\n"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    closesocket(serSocket);</span><br></pre></td></tr></table></figure>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/01/07/network-5/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="io-network" data-title="io-复用网络编程" data-url="http://simp1e.cc/2016/01/10/io-network/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
 
 
 
 
-
-
-
-
-
-  
-    <article id="post-learn-crypto" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/01/06/learn-crypto/" class="article-date">
-  	<time datetime="2016-01-06T13:20:50.000Z" itemprop="datePublished">2016-01-06</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/06/learn-crypto/">learn-crypto</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="u5BC6_u7801_u5B66_u7B2C_u4E09_u6B21_u4F5C_u4E1A_u62A5_u544A"><a href="#u5BC6_u7801_u5B66_u7B2C_u4E09_u6B21_u4F5C_u4E1A_u62A5_u544A" class="headerlink" title="密码学第三次作业报告"></a>密码学第三次作业报告</h1><h2 id="u4F5C_u4E1A_u8981_u6C42_uFF1A"><a href="#u4F5C_u4E1A_u8981_u6C42_uFF1A" class="headerlink" title="作业要求："></a>作业要求：</h2><p>1.通过逆向，还原出校验器校验原理<br>2.编程实现一个序列号生成器，对于任意name，生成能够通过校验的serial number。</p>
-<h2 id="u6821_u9A8C_u539F_u7406"><a href="#u6821_u9A8C_u539F_u7406" class="headerlink" title="校验原理"></a>校验原理</h2><blockquote>
-<p>程序会对用户名进行MD5,同时会将serial对应的16进制进行AES的加密，AES加密的密钥是<br>‘\x2b\x7e\x15\x16\x28\xae\xd2\xa6\xab\xf7\x15\x88\x09\xcf\x4f\x3c’，加密完之后将密文和用户名的MD5值进行比较，看看是否相等。</p>
-</blockquote>
-<h2 id="u89E3_u9898_u601D_u8DEF"><a href="#u89E3_u9898_u601D_u8DEF" class="headerlink" title="解题思路"></a>解题思路</h2><p>看了一下程序，其实就跟之前做CTF逆向差不错。于是进入IDA，果断String一下（想着老师不会太刁钻）直接就可以定位到关键代码了。<br><img src="/img/ida-start.png" alt="图片已丢失"><br>所以处理关键函数就是4010A0这个函数。<br>通过资源分析工具可知 1000是获取name的1001是获取serial的<br>主要就只有几个函数，逐个突破呗。<br>4012f0这个函数就是设置了一个0x0123456789abcdeffedcba9876543210<br><img src="/img/4012f0.png" alt="图片已丢失"><br>401320这个函数，稍微看了一下，发现很复杂，看到很多奇怪的常数，想起来MD5中有几个常数可以作为特征值来判断，于是………..<br><img src="/img/IDA_MD5.png" alt="图片已丢失"><br><img src="/img/md5.png" alt="图片已丢失"><br>所以不用看了，4012f0和401320组合起来就是实现了MD5</p>
-<p>后来看了看4023A0根据之前CTF的经验，有点AES的感觉，可是IDA里面没有找到密钥,果断OD一下<br><img src="/img/aes.png" alt="图片已丢失"><br>发现了这个该死的密钥，于是整个流程就清晰了。</p>
-<h1 id="u4EE3_u7801_u5C55_u793A"><a href="#u4EE3_u7801_u5C55_u793A" class="headerlink" title="代码展示"></a>代码展示</h1><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#encoding:utf-8</span></span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">from</span> Crypto.Cipher  <span class="keyword">import</span>  AES</span><br><span class="line">usname=raw_input(<span class="string">'用户名:'</span>).strip(<span class="string">'\n'</span>)</span><br><span class="line">m2 = hashlib.md5()</span><br><span class="line">m2.update(usname)</span><br><span class="line">s=m2.digest()</span><br><span class="line"><span class="comment">#print m2.hexdigest()</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">key=<span class="string">'\x2b\x7e\x15\x16\x28\xae\xd2\xa6\xab\xf7\x15\x88\x09\xcf\x4f\x3c'</span></span><br><span class="line"><span class="comment">#print len(key)</span></span><br><span class="line">mode=AES.MODE_ECB</span><br><span class="line">decryptor = AES.new(key, mode)</span><br><span class="line">plain = decryptor.decrypt(s)</span><br><span class="line">ans=<span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> xrange(len(plain)):</span><br><span class="line">    ans+= <span class="string">'%02x'</span>%(ord(plain[i]))</span><br><span class="line"><span class="keyword">print</span> <span class="string">'serial:'</span>+ans</span><br><span class="line"><span class="comment">#print len(ans)</span></span><br></pre></td></tr></table></figure>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-cpu-1" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/01/05/cpu-1/" class="article-date">
-  	<time datetime="2016-01-05T11:06:36.000Z" itemprop="datePublished">2016-01-05</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/01/05/cpu-1/">cpu</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="title_3A__u517C_u5BB9ARM9_u5FAE_u5904_u7406_u5668_u7684Verilog_RTL_u8BBE_u8BA1"><a href="#title_3A__u517C_u5BB9ARM9_u5FAE_u5904_u7406_u5668_u7684Verilog_RTL_u8BBE_u8BA1" class="headerlink" title="title: 兼容ARM9微处理器的Verilog RTL设计"></a>title: 兼容ARM9微处理器的Verilog RTL设计</h2><h1 id="ARM_u5904_u7406_u5668_u7684_u6D41_u6C34_u7EBF_u662F_u4EC0_u4E48_u6837_u5B50_u7684_uFF1F"><a href="#ARM_u5904_u7406_u5668_u7684_u6D41_u6C34_u7EBF_u662F_u4EC0_u4E48_u6837_u5B50_u7684_uFF1F" class="headerlink" title="ARM处理器的流水线是什么样子的？"></a>ARM处理器的流水线是什么样子的？</h1><blockquote>
-<p>ARM指令集的全部指令需要两个步骤，第一步是由Rm和Rs进行移位或者乘法操作，第二步是由第二操作数和Rn进行加法为主的运算操作。<br>同时，我们知道移位的运算是可以通过乘法来实现的（具体如何实现看书就行），更好的是，由于arm指令集的特点，对于arm指令的译码可以很简单的实现。于是我们可以把乘法这一步放到译码这一个阶段来执行，</p>
-</blockquote>
-<h1 id="ARM_u5904_u7406_u5668_u56DB_u7EA7_u6D41_u6C34_u7684_u5177_u4F53_u63CF_u8FF0"><a href="#ARM_u5904_u7406_u5668_u56DB_u7EA7_u6D41_u6C34_u7684_u5177_u4F53_u63CF_u8FF0" class="headerlink" title="ARM处理器四级流水的具体描述"></a>ARM处理器四级流水的具体描述</h1><p>1.第一级是取指通过端口rom_en和rom_addr实现的，rom_en是标志型号，代表现在是否能够取指，rom_addr是指针。<br>2.第二级会根据指令选择一个广义上的“Rm”和”Rs”,进行乘法操作，得到第二操作数”sec_operand”,此处称之为广义的”Rm”和”Rs”，是因为它随着指令的不同而不同，但一般是从寄存器组里面读取Rm和Rs.<br>3.第三级完成“广义”上的加法操作。之所以是广义上的加法，是除了加法这个主要的操作之外，还有一些逻辑操作，cmd_flag和cmd决定操作是否生效和本级到底执行什么操作</p>
-<h1 id="u5404_u7EA7_u53C2_u6570_u7684_u53D8_u5316"><a href="#u5404_u7EA7_u53C2_u6570_u7684_u53D8_u5316" class="headerlink" title="各级参数的变化"></a>各级参数的变化</h1><p>1.指令的变化 rom_data(第一级取指)-&gt;code(第二级执行一)-&gt;cmd(第三级执行二)</p>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/01/05/cpu-1/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-  
 </div>
       <footer id="footer">
   <div class="outer">
@@ -441,8 +316,8 @@
 		fancybox: true,
 		mathjax: true,
 		animate: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
