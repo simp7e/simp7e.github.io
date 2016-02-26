@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>cpu | simp1e&#39;s site</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="title: 兼容ARM9微处理器的Verilog RTL设计ARM处理器的流水线是什么样子的？
+ARM指令集的全部指令需要两个步骤，第一步是由Rm和Rs进行移位或者乘法操作，第二步是由第二操作数和Rn进行加法为主的运算操作。同时，我们知道移位的运算是可以通过乘法来实现的（具体如何实现看书就行），更好的是，由于arm指令集的特点，对于arm指令的译码可以很简单的实现。于是我们可以把乘法这一步放到译">
+<meta property="og:type" content="article">
+<meta property="og:title" content="cpu">
+<meta property="og:url" content="http://simp1e.cc/2016/01/05/cpu-1/index.html">
+<meta property="og:site_name" content="simp1e's site">
+<meta property="og:description" content="title: 兼容ARM9微处理器的Verilog RTL设计ARM处理器的流水线是什么样子的？
+ARM指令集的全部指令需要两个步骤，第一步是由Rm和Rs进行移位或者乘法操作，第二步是由第二操作数和Rn进行加法为主的运算操作。同时，我们知道移位的运算是可以通过乘法来实现的（具体如何实现看书就行），更好的是，由于arm指令集的特点，对于arm指令的译码可以很简单的实现。于是我们可以把乘法这一步放到译">
+<meta property="og:updated_time" content="2016-02-26T12:18:05.890Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="cpu">
+<meta name="twitter:description" content="title: 兼容ARM9微处理器的Verilog RTL设计ARM处理器的流水线是什么样子的？
+ARM指令集的全部指令需要两个步骤，第一步是由Rm和Rs进行移位或者乘法操作，第二步是由第二操作数和Rn进行加法为主的运算操作。同时，我们知道移位的运算是可以通过乘法来实现的（具体如何实现看书就行），更好的是，由于arm指令集的特点，对于arm指令的译码可以很简单的实现。于是我们可以把乘法这一步放到译">
+  
+    <link rel="alternative" href="/atom.xml" title="simp1e&#39;s site" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://i4.tietuku.com/fdbd141ca1cd3c0e.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">simple</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">CTF爱好者、二进制分析师、未来的全栈工程师</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>標籤</li>
+						
+						
+						<li>關於</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="/#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+					        
+								<a class="rss" target="_blank" href="/#" title="rss">rss</a>
+					        
+								<a class="zhihu" target="_blank" href="/#" title="zhihu">zhihu</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/心情/" style="font-size: 10px;">心情</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">CTF爱好者、二进制分析师、未来的全栈工程师</div>
+				</section>
+				
+			</div>
+		</div>
+	</header>				
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">simple</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://i4.tietuku.com/fdbd141ca1cd3c0e.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">simple</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">CTF爱好者、二进制分析师、未来的全栈工程师</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="/#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="/#" title="weibo">weibo</a>
+			        
+						<a class="rss" target="_blank" href="/#" title="rss">rss</a>
+			        
+						<a class="zhihu" target="_blank" href="/#" title="zhihu">zhihu</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-cpu-1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/05/cpu-1/" class="article-date">
+  	<time datetime="2016-01-05T11:06:36.000Z" itemprop="datePublished">2016-01-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      cpu
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="title_3A__u517C_u5BB9ARM9_u5FAE_u5904_u7406_u5668_u7684Verilog_RTL_u8BBE_u8BA1"><a href="#title_3A__u517C_u5BB9ARM9_u5FAE_u5904_u7406_u5668_u7684Verilog_RTL_u8BBE_u8BA1" class="headerlink" title="title: 兼容ARM9微处理器的Verilog RTL设计"></a>title: 兼容ARM9微处理器的Verilog RTL设计</h2><h1 id="ARM_u5904_u7406_u5668_u7684_u6D41_u6C34_u7EBF_u662F_u4EC0_u4E48_u6837_u5B50_u7684_uFF1F"><a href="#ARM_u5904_u7406_u5668_u7684_u6D41_u6C34_u7EBF_u662F_u4EC0_u4E48_u6837_u5B50_u7684_uFF1F" class="headerlink" title="ARM处理器的流水线是什么样子的？"></a>ARM处理器的流水线是什么样子的？</h1><blockquote>
+<p>ARM指令集的全部指令需要两个步骤，第一步是由Rm和Rs进行移位或者乘法操作，第二步是由第二操作数和Rn进行加法为主的运算操作。<br>同时，我们知道移位的运算是可以通过乘法来实现的（具体如何实现看书就行），更好的是，由于arm指令集的特点，对于arm指令的译码可以很简单的实现。于是我们可以把乘法这一步放到译码这一个阶段来执行，</p>
+</blockquote>
+<h1 id="ARM_u5BC4_u5B58_u5668_u7684_u7ED3_u6784"><a href="#ARM_u5BC4_u5B58_u5668_u7684_u7ED3_u6784" class="headerlink" title="ARM寄存器的结构"></a>ARM寄存器的结构</h1><blockquote>
+<p>  通用寄存器:R0~R15(其中特殊的R13(Rd)相当于X86中的sp(栈顶),R14(LR相当于X86中的返回地址),R15(Rf)相当于X86中的PC存储器,指向下一条要执行的指令.)<br>  状态寄存器:CPSR,SPSR显然就是用来保存N,Z,C,V等其他标志位.</p>
+</blockquote>
+<h1 id="ARM_u6307_u4EE4_u96C6_u7684_u7ED3_u6784"><a href="#ARM_u6307_u4EE4_u96C6_u7684_u7ED3_u6784" class="headerlink" title="ARM指令集的结构"></a>ARM指令集的结构</h1><p>ARM指令的长度都是32位的，每条指令的[31:28]位是条件执行码。意味着每条ARM指令都是条件执行指令。ARM指令的[31:28]对应15种条件，只要CPSR的N,Z,C,V满足该条件，这该条指令执行，否则该条指令不予执行。</p>
+<h2 id="ARM_u6307_u4EE4_u7684_u5206_u6790_u91CD_u65B0_u6574_u7406"><a href="#ARM_u6307_u4EE4_u7684_u5206_u6790_u91CD_u65B0_u6574_u7406" class="headerlink" title="ARM指令的分析重新整理"></a>ARM指令的分析重新整理</h2><blockquote>
+<p>根据学习相关资料的整理，最后得到，ARM的指令大体上可以分为21类指令，这里我又把这个21大类的指令根据它们的功能进行了进一步的分类整理。<br>状态寄存器类指令：<br>MRS和MSR0,MSR1<br>    MRS指令的作用是把CPSR或SPSR寄存器的内容传送给Rd(由指令[15:12]给出)<br>    MSR0指令功能恰好与MRS相反，它把寄存器组的数据Rm搬到CPSR或者SPSR中去。<br>    MSR1指令和MSR0一样也是改变CPSR或者SPSR的,不同于MSR0的是，MSR1指令的数据来源是对指令中的data进行循环右移位<br>数据处理类指令:<br>    DP0通过对Rm进行移位,得到第二操作数，然后第二操作数和Rn进行数据操作，结果按照设定决定是否送回寄存器组。<br>    第二操作数和Rn会进行数据处理操作，数据处理操作的方式由Opcode来决定。<br>    不同Opcode代表了不同的指令(如AND,EOR,SUB,RSB……)<br>    DP0,DP1,DP2三个指令的区别是得到第二操作数的移位方式不同.<br>跳转类指令:<br>    BX指令的功能比较简单。就是把Rm写入PC,进行跳转操作。<br>    B是一条跳转指令。跳转的偏移量由指令的[23:0]给出，这条指令跳转时还可以决定是否将跳转指令的下一条指令写入到R14(返回地址)里面去，这样的话，相当于X86的CALL指令<br>    SWI是一条特殊的跳转指令,即是一种指令,也是一种中断,它会触发CPU改变工作模式。<br>乘法类指令:<br>    MULT和MULTL指令<br>    MULT指令完成两个寄存器的无符号乘法操作。<br>    MULTL意思是长乘法指令。他它既可以实现无符号乘法，也可以实现有符号乘法。<br>数据池存取指令:<br>    SWP指令(字传输指令)有两个针对数据池的操作，一个是以Rn为地址，把存放在该地址的数据从数据池中读出，写入Rd内，二是把Rm的内容写入数据池的同一地址。实现寄存器和数据池的数据交换。<br>    LDRH0指令，都是对数据池进行读写操作的指令。LDRH0是对半字进行操作，同时涉及到地址回写的操作(暂时不是非常清楚其用途是什么)。<br>    LDRH1指令和LDRH0指令的功能相同，只是地址addr的产生方式略有不同。<br>    LDRSB0指令是对数据池内的字节读取，放入到Rd寄存器。LDRSB1功能类似。<br>    LDRSH0指令是从数据池内加载一个半字，符号位扩展之后写入Rd的指令。LDRSH1类似<br>    LDR0是对数据池读写的一条指令，支持字读写或者是字节读写。LDR1类似。<br>    LDM是多次读写数据池的指令，读写次数由指令的<a href="/reg_list">15:0</a>决定 reg_list对应位为1时，表明对应的寄存器需要参与读写操作。</p>
+</blockquote>
+<h1 id="ARM_u5904_u7406_u5668_u56DB_u7EA7_u6D41_u6C34_u7684_u5177_u4F53_u63CF_u8FF0"><a href="#ARM_u5904_u7406_u5668_u56DB_u7EA7_u6D41_u6C34_u7684_u5177_u4F53_u63CF_u8FF0" class="headerlink" title="ARM处理器四级流水的具体描述"></a>ARM处理器四级流水的具体描述</h1><p>1.第一级是取指通过端口rom_en和rom_addr实现的，rom_en是标志型号，代表现在是否能够取指，rom_addr是指针。<br>2.第二级会根据指令选择一个广义上的“Rm”和”Rs”,进行乘法操作，得到第二操作数”sec_operand”,此处称之为广义的”Rm”和”Rs”，是因为它随着指令的不同而不同，但一般是从寄存器组里面读取Rm和Rs.<br>3.第三级完成“广义”上的加法操作。之所以是广义上的加法，是除了加法这个主要的操作之外，还有一些逻辑操作，cmd_flag和cmd决定操作是否生效和本级到底执行什么操作</p>
+<h1 id="u5404_u7EA7_u53C2_u6570_u7684_u53D8_u5316"><a href="#u5404_u7EA7_u53C2_u6570_u7684_u53D8_u5316" class="headerlink" title="各级参数的变化"></a>各级参数的变化</h1><p>1.指令的变化 rom_data(第一级取指)-&gt;code(第二级执行一)-&gt;cmd(第三级执行二)</p>
+<a id="more"></a>
+<h1 id="u5B9A_u4E49_u7684_u89E3_u91CA"><a href="#u5B9A_u4E49_u7684_u89E3_u91CA" class="headerlink" title="定义的解释"></a>定义的解释</h1><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br></pre></td><td class="code"><pre><span class="line">input            clk;          时钟</span><br><span class="line">input            cpu_en;        整个CPU的启停信号</span><br><span class="line">input            cpu_restart;</span><br><span class="line">input            fiq;</span><br><span class="line">input            irq;</span><br><span class="line">input            ram_abort;</span><br><span class="line">input  [<span class="number">31</span>:<span class="number">0</span>]     ram_rdata;</span><br><span class="line">input            rom_abort;</span><br><span class="line">input  [<span class="number">31</span>:<span class="number">0</span>]     rom_data;</span><br><span class="line">input            rst;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">output [<span class="number">31</span>:<span class="number">0</span>]     ram_addr;</span><br><span class="line">output           ram_cen;</span><br><span class="line">output [<span class="number">3</span>:<span class="number">0</span>]     ram_flag;</span><br><span class="line">output [<span class="number">31</span>:<span class="number">0</span>]     ram_wdata;</span><br><span class="line">output           ram_wen;</span><br><span class="line">output [<span class="number">31</span>:<span class="number">0</span>]     rom_addr;</span><br><span class="line">output           rom_en;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/******************************************************/</span></span><br><span class="line"><span class="comment">//register definition area</span></span><br><span class="line"><span class="comment">/******************************************************/</span></span><br><span class="line">reg              add_c;</span><br><span class="line">reg    [<span class="number">1</span>:<span class="number">0</span>]     add_extra_num;</span><br><span class="line">reg              adder_a_inv;</span><br><span class="line">reg              adder_b_inv;</span><br><span class="line">reg    [<span class="number">3</span>:<span class="number">0</span>]     cha_fmt;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     cmd;</span><br><span class="line">reg              cmd_flag;</span><br><span class="line">reg              cmd_is_b;</span><br><span class="line">reg              cmd_is_bx;</span><br><span class="line">reg              cmd_is_dp;</span><br><span class="line">reg              cmd_is_mrs;</span><br><span class="line">reg              cmd_is_msr;</span><br><span class="line">reg              cmd_is_mult;</span><br><span class="line">reg              cmd_is_multl;</span><br><span class="line">reg              cmd_is_swi;</span><br><span class="line">reg              cmd_is_swp;</span><br><span class="line">reg              cmd_is_swpx;</span><br><span class="line">reg    [<span class="number">4</span>:<span class="number">0</span>]     cmd_sum;</span><br><span class="line">reg              code_abort;</span><br><span class="line">reg              code_cen;</span><br><span class="line">reg              code_cha_flag;</span><br><span class="line">reg              code_flag;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     code_rm;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     code_rs;</span><br><span class="line">reg    [<span class="number">3</span>:<span class="number">0</span>]     code_rt_num;</span><br><span class="line">reg              code_to_flag;</span><br><span class="line">reg              code_und;</span><br><span class="line">reg              cond_satisfy;    由当前寄存器状态为指令是否符合执行条件</span><br><span class="line">reg              cpsr_c;</span><br><span class="line">reg              cpsr_c_in;</span><br><span class="line">reg              cpsr_f;</span><br><span class="line">reg              cpsr_i;</span><br><span class="line">reg    [<span class="number">4</span>:<span class="number">0</span>]     cpsr_m;</span><br><span class="line">reg              cpsr_n;</span><br><span class="line">reg              cpsr_n_in;</span><br><span class="line">reg              cpsr_v;</span><br><span class="line">reg              cpsr_v_in;</span><br><span class="line">reg              cpsr_z;</span><br><span class="line">reg              cpsr_z_in;</span><br><span class="line">reg              dp0_rrx_shift;</span><br><span class="line">reg              dp1_lsl_more;</span><br><span class="line">reg              dp1_shift_zero;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     dp_ans;</span><br><span class="line">reg              fiq_flag;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     get_rn;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     go_data;</span><br><span class="line">reg    [<span class="number">5</span>:<span class="number">0</span>]     go_fmt;</span><br><span class="line">reg    [<span class="number">3</span>:<span class="number">0</span>]     go_num;</span><br><span class="line">reg              go_vld;</span><br><span class="line">reg              irq_flag;</span><br><span class="line">reg              ldm_change;</span><br><span class="line">reg    [<span class="number">3</span>:<span class="number">0</span>]     ldm_num;</span><br><span class="line">reg    [<span class="number">3</span>:<span class="number">0</span>]     ldm_sel;</span><br><span class="line">reg              ldm_vld;</span><br><span class="line">reg    [<span class="number">4</span>:<span class="number">0</span>]     m_after;</span><br><span class="line">reg              multl_extra_num;</span><br><span class="line">reg              multl_z;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     r0;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     r1;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     r2;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     r3;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     r4;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     r5;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     r6;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     r7;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     r8;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     r8_fiq;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     r8_usr;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     r9;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     r9_fiq;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     r9_usr;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     ra;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     ra_fiq;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     ra_usr;</span><br><span class="line">reg    [<span class="number">3</span>:<span class="number">0</span>]     ram_flag;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     ram_wdata;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     rb;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     rb_fiq;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     rb_usr;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     rc;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     rc_fiq;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     rc_usr;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     rd;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     rd_abt;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     rd_fiq;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     rd_irq;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     rd_svc;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     rd_und;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     rd_usr;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     re;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     re_abt;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     re_fiq;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     re_irq;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     re_svc;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     re_und;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     re_usr;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     reg_rn;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     reg_rs;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     rf;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     rfx;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     rt;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     sec_operand;     第二操作数</span><br><span class="line">reg              shift_bit;</span><br><span class="line">reg    [<span class="number">6</span>:<span class="number">0</span>]     shift_num;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     shift_word;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     shifter_ans;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     shifter_high;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     shifter_low;</span><br><span class="line">reg    [<span class="number">4</span>:<span class="number">0</span>]     shifter_rot_num;</span><br><span class="line">reg    [<span class="number">10</span>:<span class="number">0</span>]     spsr;</span><br><span class="line">reg    [<span class="number">10</span>:<span class="number">0</span>]     spsr_abt;</span><br><span class="line">reg    [<span class="number">10</span>:<span class="number">0</span>]     spsr_fiq;</span><br><span class="line">reg    [<span class="number">10</span>:<span class="number">0</span>]     spsr_irq;</span><br><span class="line">reg    [<span class="number">10</span>:<span class="number">0</span>]     spsr_svc;</span><br><span class="line">reg    [<span class="number">10</span>:<span class="number">0</span>]     spsr_und;</span><br><span class="line">reg    [<span class="number">4</span>:<span class="number">0</span>]     sum_m;</span><br><span class="line">reg    [<span class="number">31</span>:<span class="number">0</span>]     to_data;</span><br><span class="line">reg    [<span class="number">3</span>:<span class="number">0</span>]     to_num;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/******************************************************/</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">/******************************************************/</span></span><br><span class="line"><span class="comment">//wire definition area</span></span><br><span class="line"><span class="comment">/******************************************************/</span></span><br><span class="line">wire   [<span class="number">31</span>:<span class="number">0</span>]     add_a;</span><br><span class="line">wire   [<span class="number">31</span>:<span class="number">0</span>]     add_b;</span><br><span class="line">wire             all_code;</span><br><span class="line">wire   [<span class="number">31</span>:<span class="number">0</span>]     and_ans;</span><br><span class="line">wire             bit_cy;</span><br><span class="line">wire             bit_ov;</span><br><span class="line">wire   [<span class="number">3</span>:<span class="number">0</span>]     cha_num;</span><br><span class="line">wire             cha_rf_vld;</span><br><span class="line">wire             cha_vld;</span><br><span class="line">wire   [<span class="number">31</span>:<span class="number">0</span>]     cmd_addr;</span><br><span class="line">wire             cmd_is_ldm;</span><br><span class="line">wire             cmd_ok;        cmd对应的指令必须执行在 ~int_all &amp; cmd_flag &amp; cond_satisfy</span><br><span class="line">wire   [<span class="number">31</span>:<span class="number">0</span>]     code;</span><br><span class="line">wire             code_is_b;</span><br><span class="line">wire             code_is_bx;</span><br><span class="line">wire             code_is_dp;</span><br><span class="line">wire             code_is_dp0;</span><br><span class="line">wire             code_is_dp1;</span><br><span class="line">wire             code_is_dp2;</span><br><span class="line">wire             code_is_ldm;</span><br><span class="line">wire             code_is_ldr0;</span><br><span class="line">wire             code_is_ldr1;</span><br><span class="line">wire             code_is_ldrh0;</span><br><span class="line">wire             code_is_ldrh1;</span><br><span class="line">wire             code_is_ldrsb0;</span><br><span class="line">wire             code_is_ldrsb1;</span><br><span class="line">wire             code_is_ldrsh0;</span><br><span class="line">wire             code_is_ldrsh1;</span><br><span class="line">wire             code_is_mrs;</span><br><span class="line">wire             code_is_msr0;</span><br><span class="line">wire             code_is_msr1;</span><br><span class="line">wire             code_is_mult;</span><br><span class="line">wire             code_is_multl;</span><br><span class="line">wire             code_is_swi;</span><br><span class="line">wire             code_is_swp;</span><br><span class="line">wire   [<span class="number">3</span>:<span class="number">0</span>]     code_rm_num;</span><br><span class="line">wire             code_rm_vld;</span><br><span class="line">wire   [<span class="number">3</span>:<span class="number">0</span>]     code_rn_num;</span><br><span class="line">wire             code_rn_vld;</span><br><span class="line">wire   [<span class="number">3</span>:<span class="number">0</span>]     code_rnhi_num;</span><br><span class="line">wire             code_rnhi_vld;</span><br><span class="line">wire   [<span class="number">3</span>:<span class="number">0</span>]     code_rs_num;</span><br><span class="line">wire             code_rs_vld;</span><br><span class="line">wire   [<span class="number">4</span>:<span class="number">0</span>]     code_sum;</span><br><span class="line">wire   [<span class="number">10</span>:<span class="number">0</span>]     cpsr;</span><br><span class="line">wire   [<span class="number">31</span>:<span class="number">0</span>]     eor_ans;</span><br><span class="line">wire             fiq_en;</span><br><span class="line">wire   [<span class="number">3</span>:<span class="number">0</span>]     get_rn_num;</span><br><span class="line">wire             go_rf_vld;</span><br><span class="line">wire             high_bit;</span><br><span class="line">wire   [<span class="number">1</span>:<span class="number">0</span>]     high_middle;</span><br><span class="line">wire             hold_en;       代表SWP、MULTI和LDM这些多周期执行指令强制停止流水线的标识</span><br><span class="line">wire             int_all;       代表发生了任何一种中断</span><br><span class="line">wire             irq_en;</span><br><span class="line">wire   [<span class="number">31</span>:<span class="number">0</span>]     ldm_data;</span><br><span class="line">wire             ldm_rf_vld;</span><br><span class="line">wire             ldm_usr;</span><br><span class="line">wire   [<span class="number">63</span>:<span class="number">0</span>]     mult_ans;</span><br><span class="line">wire   [<span class="number">31</span>:<span class="number">0</span>]     or_ans;</span><br><span class="line">wire   [<span class="number">31</span>:<span class="number">0</span>]     ram_addr;</span><br><span class="line">wire             ram_cen;</span><br><span class="line">wire             ram_wen;</span><br><span class="line">wire   [<span class="number">31</span>:<span class="number">0</span>]     reg_rm;</span><br><span class="line">wire   [<span class="number">31</span>:<span class="number">0</span>]     rf_b;</span><br><span class="line">wire   [<span class="number">31</span>:<span class="number">0</span>]     rom_addr;</span><br><span class="line">wire             rom_en;</span><br><span class="line">wire   [<span class="number">3</span>:<span class="number">0</span>]     rot_numa;</span><br><span class="line">wire   [<span class="number">4</span>:<span class="number">0</span>]     rot_numb;</span><br><span class="line">wire   [<span class="number">4</span>:<span class="number">0</span>]     rot_numc;</span><br><span class="line">wire   [<span class="number">4</span>:<span class="number">0</span>]     rot_numd;</span><br><span class="line">wire   [<span class="number">4</span>:<span class="number">0</span>]     rot_nume;</span><br><span class="line">wire   [<span class="number">3</span>:<span class="number">0</span>]     rt_num;</span><br><span class="line">wire   [<span class="number">63</span>:<span class="number">0</span>]     shifter_out;</span><br><span class="line">wire   [<span class="number">31</span>:<span class="number">0</span>]     sum_middle;</span><br><span class="line">wire   [<span class="number">31</span>:<span class="number">0</span>]     sum_rn_rm;</span><br><span class="line">wire             to_rf_vld;</span><br><span class="line">wire             to_vld;</span><br><span class="line">wire             wait_en; 代表着code的指令和cmd正在执行的指令发生冲突的情况,数据相关的情况</span><br></pre></td></tr></table></figure>
+<h1 id="u6D4B_u8BD5_u60C5_u51B5"><a href="#u6D4B_u8BD5_u60C5_u51B5" class="headerlink" title="测试情况"></a>测试情况</h1><blockquote>
+<p>arm9.bin 的第一条指令是LDR0是对数据池的读写指令<br>31-24      23-16       15-8        7-0<br>1110 0101  1001 1111   1111 0000   0001 0100<br>LDRO<br>27 26 25 24 23 22 21 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1 0<br>0  1  0  P  U  B  W  L  Rn          Rd          num<br>LDRO指令是一条对数据池读写的指令，L(指令的第20位)为1时，是<br>对数据池进行读操作的指令；等于0时，是对数据池进行写操作的指令。LDR0指令使用指令的[11:0]作为立即数num来计算数据池的地址，计算公式如下：<br>addr = (P==1’b1) ? ( (U==1’b1) ? (Rn + num) : (Rn - num) ) : Rn;<br>这里的这条LDRO的指令L为1，是读操作，Rn是7(0b111),num是20(0b10100),addr=27</p>
+</blockquote>
+<p>波形观察时候必须添加的几个波形<br>rom_addr rom_data  rom_en<br>code code_flag code_rm code_rs code_rot_num sec_operand shifter_ans<br>cmd cmd_flag to_vld to_num cha_vld cha_num<br>go_vld go_num ram_rdata<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">下面整体叙述一下我的代码</span><br><span class="line">    第一块代码是译码部分，我这里是直接根据ARM指令的结构，简单的区分开各个指令的类型。</span><br><span class="line"></span><br><span class="line">    第二块代码是Rm和Rs移位区，在第二级时，完成Rm&lt;&lt;Rs的移位操作，形成第二操作数的原型，这里只是完成sec_operand的原型而已，因为根据不同指令的要求，sec_operand转换到第三级流水执行的操作数还是不同的。</span><br><span class="line">    在第二级，我们必须完成Rm移位的操作。需要移位的指令主要是dp0,dp1,dp2,还有msr1,ldr0这两条指令。</span><br><span class="line">    但很多立即数和Rm不需要移位，我们还是把它放在shift_high上，让它移位<span class="number">0</span>，以便传给第二操作数。</span><br><span class="line">    Rm如果来自于寄存器，一般是由code[<span class="number">3</span>:<span class="number">0</span>]给出的，这里通过它来获取Rm</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/06/learn-crypto/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          learn-crypto
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+<div class="share_jia">
+	<!-- JiaThis Button BEGIN -->
+	<div class="jiathis_style">
+		<span class="jiathis_txt">分享到: &nbsp; </span>
+		<a class="jiathis_button_facebook"></a> 
+    <a class="jiathis_button_twitter"></a>
+    <a class="jiathis_button_plus"></a> 
+    <a class="jiathis_button_tsina"></a>
+		<a class="jiathis_button_cqq"></a>
+		<a class="jiathis_button_douban"></a>
+		<a class="jiathis_button_weixin"></a>
+		<a class="jiathis_button_tumblr"></a>
+    <a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+	</div>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=1405949716054953" charset="utf-8"></script>
+	<!-- JiaThis Button END -->
+</div>
+
+
+
+
+
+
+<div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="cpu-1" data-title="cpu" data-url="http://simp1e.cc/2016/01/05/cpu-1/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"true"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
+
+
+
+</div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 simple
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js" type="text/javascript"></script>
+<script src="/js/main.js" type="text/javascript"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

@@ -1582,6 +1582,73 @@ MRS和MSR0,MSR1<br />
 
 
   
+    <article id="post-cpu-1" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/01/05/cpu-1/" class="article-date">
+  	<time datetime="2016-01-05T11:06:36.000Z" itemprop="datePublished">2016-01-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/01/05/cpu-1/">cpu</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="title_3A__u517C_u5BB9ARM9_u5FAE_u5904_u7406_u5668_u7684Verilog_RTL_u8BBE_u8BA1"><a href="#title_3A__u517C_u5BB9ARM9_u5FAE_u5904_u7406_u5668_u7684Verilog_RTL_u8BBE_u8BA1" class="headerlink" title="title: 兼容ARM9微处理器的Verilog RTL设计"></a>title: 兼容ARM9微处理器的Verilog RTL设计</h2><h1 id="ARM_u5904_u7406_u5668_u7684_u6D41_u6C34_u7EBF_u662F_u4EC0_u4E48_u6837_u5B50_u7684_uFF1F"><a href="#ARM_u5904_u7406_u5668_u7684_u6D41_u6C34_u7EBF_u662F_u4EC0_u4E48_u6837_u5B50_u7684_uFF1F" class="headerlink" title="ARM处理器的流水线是什么样子的？"></a>ARM处理器的流水线是什么样子的？</h1><blockquote>
+<p>ARM指令集的全部指令需要两个步骤，第一步是由Rm和Rs进行移位或者乘法操作，第二步是由第二操作数和Rn进行加法为主的运算操作。<br>同时，我们知道移位的运算是可以通过乘法来实现的（具体如何实现看书就行），更好的是，由于arm指令集的特点，对于arm指令的译码可以很简单的实现。于是我们可以把乘法这一步放到译码这一个阶段来执行，</p>
+</blockquote>
+<h1 id="ARM_u5BC4_u5B58_u5668_u7684_u7ED3_u6784"><a href="#ARM_u5BC4_u5B58_u5668_u7684_u7ED3_u6784" class="headerlink" title="ARM寄存器的结构"></a>ARM寄存器的结构</h1><blockquote>
+<p>  通用寄存器:R0~R15(其中特殊的R13(Rd)相当于X86中的sp(栈顶),R14(LR相当于X86中的返回地址),R15(Rf)相当于X86中的PC存储器,指向下一条要执行的指令.)<br>  状态寄存器:CPSR,SPSR显然就是用来保存N,Z,C,V等其他标志位.</p>
+</blockquote>
+<h1 id="ARM_u6307_u4EE4_u96C6_u7684_u7ED3_u6784"><a href="#ARM_u6307_u4EE4_u96C6_u7684_u7ED3_u6784" class="headerlink" title="ARM指令集的结构"></a>ARM指令集的结构</h1><p>ARM指令的长度都是32位的，每条指令的[31:28]位是条件执行码。意味着每条ARM指令都是条件执行指令。ARM指令的[31:28]对应15种条件，只要CPSR的N,Z,C,V满足该条件，这该条指令执行，否则该条指令不予执行。</p>
+<h2 id="ARM_u6307_u4EE4_u7684_u5206_u6790_u91CD_u65B0_u6574_u7406"><a href="#ARM_u6307_u4EE4_u7684_u5206_u6790_u91CD_u65B0_u6574_u7406" class="headerlink" title="ARM指令的分析重新整理"></a>ARM指令的分析重新整理</h2><blockquote>
+<p>根据学习相关资料的整理，最后得到，ARM的指令大体上可以分为21类指令，这里我又把这个21大类的指令根据它们的功能进行了进一步的分类整理。<br>状态寄存器类指令：<br>MRS和MSR0,MSR1<br>    MRS指令的作用是把CPSR或SPSR寄存器的内容传送给Rd(由指令[15:12]给出)<br>    MSR0指令功能恰好与MRS相反，它把寄存器组的数据Rm搬到CPSR或者SPSR中去。<br>    MSR1指令和MSR0一样也是改变CPSR或者SPSR的,不同于MSR0的是，MSR1指令的数据来源是对指令中的data进行循环右移位<br>数据处理类指令:<br>    DP0通过对Rm进行移位,得到第二操作数，然后第二操作数和Rn进行数据操作，结果按照设定决定是否送回寄存器组。<br>    第二操作数和Rn会进行数据处理操作，数据处理操作的方式由Opcode来决定。<br>    不同Opcode代表了不同的指令(如AND,EOR,SUB,RSB……)<br>    DP0,DP1,DP2三个指令的区别是得到第二操作数的移位方式不同.<br>跳转类指令:<br>    BX指令的功能比较简单。就是把Rm写入PC,进行跳转操作。<br>    B是一条跳转指令。跳转的偏移量由指令的[23:0]给出，这条指令跳转时还可以决定是否将跳转指令的下一条指令写入到R14(返回地址)里面去，这样的话，相当于X86的CALL指令<br>    SWI是一条特殊的跳转指令,即是一种指令,也是一种中断,它会触发CPU改变工作模式。<br>乘法类指令:<br>    MULT和MULTL指令<br>    MULT指令完成两个寄存器的无符号乘法操作。<br>    MULTL意思是长乘法指令。他它既可以实现无符号乘法，也可以实现有符号乘法。<br>数据池存取指令:<br>    SWP指令(字传输指令)有两个针对数据池的操作，一个是以Rn为地址，把存放在该地址的数据从数据池中读出，写入Rd内，二是把Rm的内容写入数据池的同一地址。实现寄存器和数据池的数据交换。<br>    LDRH0指令，都是对数据池进行读写操作的指令。LDRH0是对半字进行操作，同时涉及到地址回写的操作(暂时不是非常清楚其用途是什么)。<br>    LDRH1指令和LDRH0指令的功能相同，只是地址addr的产生方式略有不同。<br>    LDRSB0指令是对数据池内的字节读取，放入到Rd寄存器。LDRSB1功能类似。<br>    LDRSH0指令是从数据池内加载一个半字，符号位扩展之后写入Rd的指令。LDRSH1类似<br>    LDR0是对数据池读写的一条指令，支持字读写或者是字节读写。LDR1类似。<br>    LDM是多次读写数据池的指令，读写次数由指令的<a href="/reg_list">15:0</a>决定 reg_list对应位为1时，表明对应的寄存器需要参与读写操作。</p>
+</blockquote>
+<h1 id="ARM_u5904_u7406_u5668_u56DB_u7EA7_u6D41_u6C34_u7684_u5177_u4F53_u63CF_u8FF0"><a href="#ARM_u5904_u7406_u5668_u56DB_u7EA7_u6D41_u6C34_u7684_u5177_u4F53_u63CF_u8FF0" class="headerlink" title="ARM处理器四级流水的具体描述"></a>ARM处理器四级流水的具体描述</h1><p>1.第一级是取指通过端口rom_en和rom_addr实现的，rom_en是标志型号，代表现在是否能够取指，rom_addr是指针。<br>2.第二级会根据指令选择一个广义上的“Rm”和”Rs”,进行乘法操作，得到第二操作数”sec_operand”,此处称之为广义的”Rm”和”Rs”，是因为它随着指令的不同而不同，但一般是从寄存器组里面读取Rm和Rs.<br>3.第三级完成“广义”上的加法操作。之所以是广义上的加法，是除了加法这个主要的操作之外，还有一些逻辑操作，cmd_flag和cmd决定操作是否生效和本级到底执行什么操作</p>
+<h1 id="u5404_u7EA7_u53C2_u6570_u7684_u53D8_u5316"><a href="#u5404_u7EA7_u53C2_u6570_u7684_u53D8_u5316" class="headerlink" title="各级参数的变化"></a>各级参数的变化</h1><p>1.指令的变化 rom_data(第一级取指)-&gt;code(第二级执行一)-&gt;cmd(第三级执行二)</p>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/01/05/cpu-1/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
   
 </div>
       <footer id="footer">
